@@ -159,7 +159,8 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
             uploadHost,
             clientName,
             responseFilter,
-            id: `folder_${rootFolderId}`
+            id: `folder_${rootFolderId}`,
+            consoleLog: true
         });
     }
 
@@ -238,12 +239,8 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
         const { chunked } = this.props;
         const { size } = file;
         const factory = this.createAPIFactory();
-
-        if (chunked && size > CHUNKED_UPLOAD_MIN_SIZE_BYTES) {
-            return factory.getChunkedUploadAPI();
-        }
-
-        return factory.getPlainUploadAPI();
+        return factory.getMultiputUploadAPI();
+        // return factory.getChunkedUploadAPI();
     }
 
     /**
