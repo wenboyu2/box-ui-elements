@@ -8,12 +8,13 @@ import ProgressBar from './ProgressBar';
 import './ItemProgress.scss';
 
 type Props = {
-    progress: number
+    progress: number,
+    showProgressBar: boolean
 };
 
-const ItemProgress = ({ progress }: Props) =>
+const ItemProgress = ({ progress, showProgressBar }: Props) =>
     <div className='bcu-item-progress'>
-        <ProgressBar percent={progress} />
+        {showProgressBar && <ProgressBar percent={progress} />}
         <div className='bcu-progress-label'>
             {progress}%
         </div>

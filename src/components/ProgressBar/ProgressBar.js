@@ -8,7 +8,8 @@ import React, { PureComponent } from 'react';
 import './ProgressBar.scss';
 
 type Props = {
-    percent: number
+    percent: number,
+    resetOnComplete: boolean
 };
 
 type DefaultProps = {|
@@ -24,7 +25,7 @@ class ProgressBar extends PureComponent<DefaultProps, Props, State> {
     state: State;
     timeout: number;
 
-    static defaultProps = { percent: 0 };
+    static defaultProps = { percent: 0, resetOnComplete: true };
 
     /**
      * [constructor]
@@ -67,9 +68,11 @@ class ProgressBar extends PureComponent<DefaultProps, Props, State> {
      */
     startProgress = () => {
         const { percent }: State = this.state;
+        const { resetOnComplete } = this.props;
+
         if (percent === 0) {
             this.timeout = setInterval(this.incrementProgress, 100);
-        } else if (percent === 100) {
+        } else if (resetOnComplete && percent === 100) {
             // Timeout helps transition of hiding the bar to finish
             this.timeout = setTimeout(this.resetProgress, 600);
         }
@@ -103,8 +106,9 @@ class ProgressBar extends PureComponent<DefaultProps, Props, State> {
      */
     render() {
         const { percent }: State = this.state;
+        const { resetOnComplete } = this.props;
         const containerStyle = {
-            opacity: percent > 0 && percent < 100 ? 1 : 0,
+            opacity: (percent > 0 && percent < 100) || (percent > 0 && !resetOnComplete) ? 1 : 0,
             transitionDelay: percent > 0 && percent < 100 ? '0' : '0.4s'
         };
         return (

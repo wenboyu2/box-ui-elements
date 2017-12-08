@@ -15,14 +15,16 @@ import './ItemList.scss';
 
 type Props = {
     items: UploadItem[],
-    onClick: Function
+    onClick: Function,
+    showProgressBar: boolean,
+    showFileIcon: boolean
 };
 
-const ItemList = ({ items, onClick }: Props) =>
+const ItemList = ({ items, onClick, showProgressBar = true, showFileIcon = true }: Props) =>
     <AutoSizer>
         {({ width, height }) => {
-            const nameCell = nameCellRenderer();
-            const progressCell = progressCellRenderer();
+            const nameCell = nameCellRenderer(showFileIcon);
+            const progressCell = progressCellRenderer(showProgressBar);
             const actionCell = actionCellRenderer(onClick);
 
             return (

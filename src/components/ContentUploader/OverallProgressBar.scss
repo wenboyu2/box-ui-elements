@@ -1,0 +1,63 @@
+.overall-progress-bar {
+    align-items: center;
+    background: #333;
+    color: #FFF;
+    cursor: pointer;
+    display: flex;
+    height: 60px;
+    line-height: 60px;
+    padding-left: 30px;
+    padding-right: 65px;
+    position: relative;
+
+    .buik-progress {
+        background: white;
+    }
+
+    .buik-progress-container {
+        top: 29px;
+        position: static;
+    }
+
+    .upload-status {
+        margin-right: 20px;
+        font-size: 16px;
+    }
+
+    .uploads-manager-toggle {
+        background: 0 0;
+        border: 0;
+        bottom: 0;
+        height: 10px;
+        margin: auto 0;
+        position: absolute;
+        right: 30px;
+        top: 0;
+        vertical-align: middle;
+        width: 10px;
+    }
+
+    .uploads-manager-toggle:before {
+        border: 0 solid #FFF;
+        content: "";
+        height: 6px;
+        position: absolute;
+        width: 6px;
+        bottom: 7px;
+        left: 7px;
+        border-bottom-width: 2px;
+        border-left-width: 2px;
+    }
+
+    .uploads-manager-toggle:after {
+        border: 0 solid #FFF;
+        content: "";
+        height: 6px;
+        position: absolute;
+        width: 6px;
+        right: 7px;
+        top: 7px;
+        border-right-width: 2px;
+        border-top-width: 2px;
+    }
+}

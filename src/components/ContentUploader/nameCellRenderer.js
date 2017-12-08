@@ -11,4 +11,4 @@ type Props = {
     rowData: UploadItem
 };
 
-export default () => ({ rowData }: Props) => <IconName {...rowData} />;
+export default (showFileIcon) => ({ rowData }: Props) => <IconName {...rowData} showFileIcon={showFileIcon} />;

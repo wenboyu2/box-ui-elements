@@ -12,6 +12,7 @@ import uniqueid from 'lodash.uniqueid';
 import cloneDeep from 'lodash.clonedeep';
 import API from '../../api';
 import DroppableContent from './DroppableContent';
+import UploadsManager from './UploadsManager';
 import Footer from './Footer';
 import makeResponsive from '../makeResponsive';
 import Internationalize from '../Internationalize';
@@ -57,7 +58,8 @@ type Props = {
     language?: string,
     messages?: StringMap,
     responseFilter?: Function,
-    intl: any
+    intl: any,
+    windowView?: boolean
 };
 
 type DefaultProps = {|
@@ -102,7 +104,8 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
         onClose: noop,
         onComplete: noop,
         onError: noop,
-        onUpload: noop
+        onUpload: noop,
+        windowView: false
     };
 
     /**
@@ -227,6 +230,11 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
         }
     };
 
+    addFilesToUploadQueueAndStartUpload(files: File[]) {
+        this.addFilesToUploadQueue(files);
+        this.upload();
+    }
+
     /**
      * Returns a new API instance for the given file.
      *
@@ -293,7 +301,7 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
     upload = () => {
         const { items } = this.state;
         items.forEach((uploadItem) => {
-            if (uploadItem.status !== STATUS_IN_PROGRESS) {
+            if (uploadItem.status !== STATUS_IN_PROGRESS && uploadItem.status !== STATUS_COMPLETE) {
                 this.uploadFile(uploadItem);
             }
         });
@@ -397,7 +405,7 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
         } else {
             view = VIEW_UPLOAD_SUCCESS;
             onComplete(cloneDeep(items.map((item) => item.boxFile)));
-            items = []; // Reset item collection after successful upload
+            // items = []; // Reset item collection after successful upload
         }
 
         const state: State = {
@@ -500,25 +508,34 @@ class ContentUploader extends Component<DefaultProps, Props, State> {
 
         return (
             <Internationalize language={language} messages={messages}>
-                <div className={styleClassName} id={this.id} ref={measureRef}>
-                    <DroppableContent
-                        addFiles={this.addFilesToUploadQueue}
-                        allowedTypes={['Files']}
-                        items={items}
-                        isTouch={isTouch}
-                        view={view}
-                        onClick={this.onClick}
-                    />
-                    <Footer
-                        hasFiles={hasFiles}
-                        isLoading={isLoading}
-                        errorCode={errorCode}
-                        fileLimit={fileLimit}
-                        onCancel={this.cancel}
-                        onClose={onClose}
-                        onUpload={this.upload}
-                    />
-                </div>
+                {this.props.windowView
+                    ? <div className={styleClassName} id={this.id} ref={measureRef}>
+                        <UploadsManager
+                            addFiles={this.addFilesToUploadQueue}
+                            onClick={this.onClick}
+                            items={items}
+                            view={view}
+                          />
+                    </div>
+                    : <div className={styleClassName} id={this.id} ref={measureRef}>
+                        <DroppableContent
+                            addFiles={this.addFilesToUploadQueue}
+                            allowedTypes={['Files']}
+                            items={items}
+                            isTouch={isTouch}
+                            view={view}
+                            onClick={this.onClick}
+                          />
+                        <Footer
+                            hasFiles={hasFiles}
+                            isLoading={isLoading}
+                            errorCode={errorCode}
+                            fileLimit={fileLimit}
+                            onCancel={this.cancel}
+                            onClose={onClose}
+                            onUpload={this.upload}
+                          />
+                    </div>}
             </Internationalize>
         );
     }

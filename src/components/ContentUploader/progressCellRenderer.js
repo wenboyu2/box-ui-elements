@@ -12,4 +12,5 @@ type Props = {
     rowData: UploadItem
 };
 
-export default () => ({ rowData }: Props) => (rowData.status !== STATUS_PENDING ? <ItemProgress {...rowData} /> : null);
+export default (showProgressBar) => ({ rowData }: Props) =>
+    rowData.status !== STATUS_PENDING ? <ItemProgress {...rowData} showProgressBar={showProgressBar} /> : null;

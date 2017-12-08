@@ -10,14 +10,16 @@ import './IconName.scss';
 
 type Props = {
     name: string,
-    extension: string
+    extension: string,
+    showFileIcon: boolean
 };
 
-const IconName = ({ name, extension }: Props) =>
+const IconName = ({ name, extension, showFileIcon = true }: Props) =>
     <div className='bcu-item-icon-name'>
-        <div className='bcu-item-icon'>
-            <FileIcon extension={extension} />
-        </div>
+        {showFileIcon &&
+            <div className='bcu-item-icon'>
+                <FileIcon extension={extension} />
+            </div>}
         <div className='bcu-item-name'>
             <ItemName name={name} />
         </div>

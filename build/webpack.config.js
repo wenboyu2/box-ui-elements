@@ -79,4 +79,4 @@ function getConfig(isReactExternalized) {
     return config;
 }
 
-module.exports = [getConfig(true), getConfig(false)];
+module.exports = [getConfig(false)];

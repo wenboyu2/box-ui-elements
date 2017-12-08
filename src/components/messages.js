@@ -437,6 +437,21 @@ const messages: { [string]: IntlDESCriptor } = defineMessages({
         id: 'be.errorBreadcrumb',
         description: 'Shown as the title in the sub header while showing an error.',
         defaultMessage: 'Error'
+    },
+    uploadManagerUploadInProgress: {
+        id: 'be.uploadManagerUploadInProgress',
+        description: 'Text shown when uploads are in progress',
+        defaultMessage: 'Uploading'
+    },
+    uploadManagerUploadComplete: {
+        id: 'be.uploadManagerUploadComplete',
+        description: 'Text shown when uploads are completed',
+        defaultMessage: 'Completed'
+    },
+    uploadManagerUploadFailed: {
+        id: 'be.uploadManagerUploadFailed',
+        description: 'Text shown when uploads failed',
+        defaultMessage: 'Some Uploads Failed.'
     }
 });
 
